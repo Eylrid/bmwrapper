@@ -2,6 +2,7 @@ import asyncore
 from smtpd import SMTPServer
 import email.parser
 import bminterface
+import editor
 
 class outgoingServer(SMTPServer):
     def process_message(self, peer, mailfrom, rcpttos, data):
@@ -67,6 +68,7 @@ class outgoingServer(SMTPServer):
       return firstText, text, image
 
     def _parseQuoteText(self, text):
+      text = editor.deedit(text)
       rawText = text.split('\n')
       tempText = []
       text = ''

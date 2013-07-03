@@ -5,6 +5,7 @@ import email.mime.image
 import email.mime.multipart
 import bminterface
 import re
+import editor
 
 class ChatterboxConnection(object):
     END = "\r\n"
@@ -182,7 +183,7 @@ def parseBody(body):
         returnData.append(imageData)
       body = body[:attachment.start()] + body[attachment.end()+1:]
       attachment = re.search(searchString, body)
-    text = body
+    text = editor.edit(body)
     returnData = [text] + returnData
     return returnData
 
