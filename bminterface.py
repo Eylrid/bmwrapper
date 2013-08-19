@@ -9,7 +9,7 @@ purgeList = []
 allMessages = []
 
 def _getKeyLocation():  #make this not suck later
-    return '~/.PyBitmessage/keys.dat'
+    return '~/.config/PyBitmessage/keys.dat'
 
 def _getConfig(keys):
     return apiData()
@@ -88,8 +88,11 @@ def get(msgID):
     dateTime = email.utils.formatdate(time.mktime(datetime.datetime.fromtimestamp(float(inboxMessages['inboxMessages'][msgID]['receivedTime'])).timetuple()))
     toAddress = inboxMessages['inboxMessages'][msgID]['toAddress'] + '@bm.addr'
     fromAddress = inboxMessages['inboxMessages'][msgID]['fromAddress'] + '@bm.addr'
-    if 'Broadcast' in toAddress:
-      toAddress = fromAddress
+
+    ##Disabled to support new chan format
+    #if 'Broadcast' in toAddress:
+    #  toAddress = fromAddress
+
     subject = inboxMessages['inboxMessages'][msgID]['subject'].decode('base64')
     body = inboxMessages['inboxMessages'][msgID]['message'].decode('base64')
     return dateTime, toAddress, fromAddress, subject, body
