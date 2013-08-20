@@ -83,6 +83,14 @@ def getAddresses():
     api = _makeApi(_getKeyLocation())
     return api.listAddresses()
 
+def getAddressbook():
+    api = _makeApi(_getKeyLocation())
+    return api.listAddressbook()
+
+def getSubscriptions():
+    api = _makeApi(_getKeyLocation())
+    return api.listSubscriptions()
+
 def get(msgID):
     inboxMessages = _getAll()
     dateTime = email.utils.formatdate(time.mktime(datetime.datetime.fromtimestamp(float(inboxMessages['inboxMessages'][msgID]['receivedTime'])).timetuple()))

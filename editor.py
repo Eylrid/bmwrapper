@@ -135,15 +135,22 @@ def lookupname(address):
     return '%s %s' %(firstname, lastname)
 
 def label(address):
-    addDict = addressDict()
-    if address in addDict:
-        label = addDict[address]
-
-        #non word or space charcters could cause problems
-        #later when removing the label, so we get rid of them
-        label = re.sub(r'[^\w\s]', '', label)
+    myAddDict = myAddressDict()
+    addbookDict = addressbookDict()
+    subDict = subscriptionDict()
+    if address in myAddDict:
+        label = myAddDict[address]
+    elif address in addbookDict:
+        label = addbookDict[address]
+    elif address in subDict:
+        label = subDict[address]
     else:
         label = lookupname(address)
+
+    #non word or space charcters could cause problems
+    #later when removing the label, so we get rid of them
+    label = re.sub(r'[^\w\s]', '', label)
+
     return label
 
 def subaddress(matchobj):
@@ -171,9 +178,24 @@ def deedit(input):
     output = desubaddresses(input)
     return output
 
-def addressDict():
+def myAddressDict():
     '''return a dict mapping addresses to labels'''
     jsonAddresses = json.loads(bminterface.getAddresses())
     addressList = [(i['address'], i['label']) for i in jsonAddresses['addresses']]
     addressDict = dict(addressList)
     return addressDict
+
+def addressbookDict():
+    '''return a dict mapping addresses to labels'''
+    jsonAddresses = json.loads(bminterface.getAddressbook())
+    addressList = [(i['address'], i['label']) for i in jsonAddresses['addresses']]
+    addressDict = dict(addressList)
+    return addressDict
+
+def subscriptionDict():
+    '''return a dict mapping addresses to labels'''
+    jsonAddresses = json.loads(bminterface.getSubscriptions())
+    addressList = [(i['address'], i['label']) for i in jsonAddresses['subscriptions']]
+    addressDict = dict(addressList)
+    return addressDict
+
