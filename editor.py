@@ -141,9 +141,9 @@ def label(address):
     if address in myAddDict:
         label = myAddDict[address]
     elif address in addbookDict:
-        label = addbookDict[address]
+        label = addbookDict[address].decode('base64')
     elif address in subDict:
-        label = subDict[address]
+        label = subDict[address].decode('base64')
     else:
         label = lookupname(address)
 
